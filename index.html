@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SameSite=None Cookie Test</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 2rem;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🍪 SameSite=None; Secure Cookie Test</h1>
+  <p>This page makes a cross-origin request to <code>https://rollun.net</code> with credentials included.</p>
+
+  <button id="send-request">Send cross-origin request</button>
+
+  <h2>Result:</h2>
+  <pre id="output">Waiting for request...</pre>
+
+  <script>
+    document.getElementById('send-request').onclick = () => {
+      document.getElementById('output').textContent = "Sending request...";
+
+      fetch("https://rollun.net/api/datastore/OrdersDataStore?limit%2820%2C0%29=", {
+        method: "GET",
+        credentials: "include" // Important: sends cookies
+      })
+      .then(response => {
+        return response.text().then(text => ({
+          status: response.status,
+          text
+        }));
+      })
+      .then(({ status, text }) => {
+        document.getElementById('output').textContent =
+          `Status: ${status}\n\nResponse:\n${text}`;
+      })
+      .catch(err => {
+        document.getElementById('output').textContent = "❌ Error:\n" + err;
+      });
+    };
+  </script>
+</body>
+</html>
